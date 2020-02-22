@@ -1,0 +1,22 @@
+name: PlayerRanks
+version: 1.0.4
+author: cyne
+main: de.cyne.playerranks.PlayerRanks
+
+commands:
+  playerranks:
+    description: 'Main command of PlayerRanks'
+    aliases: pr
+
+permissions:
+  playerranks.*:
+    description: 'Get all permissions'
+    children:
+      playerranks.admin: true
+      playerranks.chatcolor: true
+  playerranks.admin:
+    description: 'Manage the plugin'
+  playerranks.rank.<rank>:
+    description: 'Get a rank'
+  playerranks.chatcolor:
+    description: 'Use chatcolor in the chat'
