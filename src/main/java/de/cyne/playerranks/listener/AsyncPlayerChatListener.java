@@ -1,7 +1,8 @@
 package de.cyne.playerranks.listener;
 
 import de.cyne.playerranks.PlayerRanks;
-import org.bukkit.Bukkit;
+import de.cyne.playerranks.rank.Rank;
+import de.cyne.playerranks.rank.RankManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,9 +21,9 @@ public class AsyncPlayerChatListener implements Listener {
                 message = ChatColor.translateAlternateColorCodes('&', message);
             }
 
-            String rank = PlayerRanks.chatFormat.get(p);
-            if (PlayerRanks.cfg.get("ranks." + rank + ".chat_format") != null) {
-                e.setFormat(ChatColor.translateAlternateColorCodes('&', PlayerRanks.cfg.getString("ranks." + rank + ".chat_format")).replace("%player%", p.getName()).replace("%message%", message));
+            Rank rank = RankManager.players.get(p);
+            if (PlayerRanks.cfg.get("ranks." + rank.getName() + ".chat_format") != null) {
+                e.setFormat(ChatColor.translateAlternateColorCodes('&', rank.getChatFormat()).replace("%player%", p.getName()).replace("%message%", message));
             }
         }
 

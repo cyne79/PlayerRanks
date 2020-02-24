@@ -1,6 +1,6 @@
 package de.cyne.playerranks.listener;
 
-import de.cyne.playerranks.PlayerRanks;
+import de.cyne.playerranks.rank.RankManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,8 +12,10 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
 
-        PlayerRanks.chatFormat.remove(p);
-        PlayerRanks.ranks.get(p).remove();
-        PlayerRanks.ranks.remove(p);
+        if (RankManager.players.containsKey(p)) {
+            RankManager.players.get(p).removePlayer(p);
+            RankManager.players.remove(p);
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 package de.cyne.playerranks.listener;
 
 import de.cyne.playerranks.PlayerRanks;
-import de.cyne.playerranks.Rank;
+import de.cyne.playerranks.rank.RankManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -17,9 +17,8 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        PlayerRanks.ranks.put(p, new Rank(p));
-        p.setScoreboard(PlayerRanks.board);
-        PlayerRanks.getInstance().setRank(p);
+        RankManager.getRankManager().setRank(p);
+        RankManager.getRankManager().refreshAll();
 
         if (PlayerRanks.updateAvailable && PlayerRanks.cfg.getBoolean("update_notification") && p.hasPermission("playerranks.admin")) {
             TextComponent message = new TextComponent(PlayerRanks.prefix + "§7Download now §8▶ ");
