@@ -1,6 +1,7 @@
 package de.cyne.playerranks.commands;
 
 import de.cyne.playerranks.PlayerRanks;
+import de.cyne.playerranks.rank.Inventories;
 import de.cyne.playerranks.rank.Rank;
 import de.cyne.playerranks.rank.RankManager;
 import org.bukkit.Bukkit;
@@ -40,7 +41,7 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
                         sender.sendMessage("§8┃ §b● §8┃ §cCurrently, there are no ranks set.");
                     } else {
                         for (Rank rank : RankManager.ranks) {
-                            sender.sendMessage("§8┃ §b● §8┃ §8- §f" + rank.getName() + " §8┃ §7Prefix §8► §8§r" + ChatColor.translateAlternateColorCodes('&', rank.getPrefix()));
+                            sender.sendMessage("§8┃ §b● §8┃ §8- §f" + rank.getName() + " §8┃ §7Prefix §8► §8§r" + ChatColor.translateAlternateColorCodes('&', rank.getPrefix()) + " §8┃ §7Suffix §8► §8§r" + ChatColor.translateAlternateColorCodes('&', rank.getSuffix()));
                         }
                     }
                     sender.sendMessage("");
@@ -48,6 +49,10 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
                 }
                 if (args[0].equalsIgnoreCase("info")) {
                     sender.sendMessage(PlayerRanks.prefix + "§cUsage§8: /§cplayerranks info §8<§cplayer§8>");
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("ranks1")) {
+                    Inventories.openRankInventory((Player)sender, 1);
                     return true;
                 }
                 this.sendPluginHelp(sender);
@@ -65,7 +70,8 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
                     sender.sendMessage("§8┃ §b● §8┃ §bPlayerInfo §8× §7Player§8: §f" + target.getName());
                     sender.sendMessage("§8┃ §b● §8┃ ");
                     sender.sendMessage("§8┃ §b● §8┃ §7Rank§8: §r" + rank.getName());
-                    sender.sendMessage("§8┃ §b● §8┃ §7Prefix§8: §r" + rank.getPrefix());
+                    sender.sendMessage("§8┃ §b● §8┃ §7Prefix§8: §r" + ChatColor.translateAlternateColorCodes('&', rank.getPrefix()));
+                    sender.sendMessage("§8┃ §b● §8┃ §7Suffix§8: §r" + ChatColor.translateAlternateColorCodes('&', rank.getSuffix()));
                     sender.sendMessage("");
                     return true;
                 }

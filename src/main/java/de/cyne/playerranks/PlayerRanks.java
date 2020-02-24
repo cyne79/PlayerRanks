@@ -27,7 +27,9 @@ public class PlayerRanks extends JavaPlugin implements Listener {
     public static FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
     public static Rank defaultRank = null;
+
     public static PacketManager packetManager;
+    public static RankManager rankManager;
 
     public static Updater updater;
     public static boolean updateAvailable = false;
@@ -51,6 +53,7 @@ public class PlayerRanks extends JavaPlugin implements Listener {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(PlayerRanks.getInstance(), () -> updater.run(), 0L, 20 * 60 * 60 * 24);
 
         packetManager = new PacketManager();
+        rankManager = new RankManager();
 
         RankManager.getRankManager().loadRanks();
 

@@ -12,11 +12,13 @@ use_chat_format: true
 ranks:
   default:
     prefix: '&aPlayer &8● &7'
+    suffix: ''
     chat_format: '&8┃ &aPlayer &8● &7%player% &8» &r%message%'
     priority: 1
     default: true
   admin:
     prefix: '&4Admin &8● &7'
+    suffix: ''
     chat_format: '&8┃ &4Admin &8● &7%player% &8» &r%message%'
     priority: 2
     default: false

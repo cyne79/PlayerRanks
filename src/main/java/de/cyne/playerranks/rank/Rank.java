@@ -8,14 +8,16 @@ public class Rank {
 
     private String name;
     private String prefix;
+    private String suffix;
     private String chatFormat;
     private int priority;
     private boolean defaultRank;
     private ArrayList<Player> players;
 
-    public Rank(String name, String prefix, String chatFormat, int priority) {
+    public Rank(String name, String prefix, String suffix, String chatFormat, int priority) {
         this.name = name;
         this.prefix = prefix;
+        this.suffix = suffix;
         this.chatFormat = chatFormat;
         this.priority = priority;
         this.defaultRank = false;
@@ -30,6 +32,10 @@ public class Rank {
         return prefix;
     }
 
+    public String getSuffix() {
+        return suffix;
+    }
+
     public String getChatFormat() {
         return chatFormat;
     }
@@ -38,7 +44,7 @@ public class Rank {
         return priority;
     }
 
-    public boolean getDefaultRank() {
+    public boolean isDefaultRank() {
         return defaultRank;
     }
 
@@ -52,6 +58,10 @@ public class Rank {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
     }
 
     public void setChatFormat(String chatFormat) {

@@ -28,13 +28,24 @@ public class RankManager {
     public void loadRanks() {
         if (PlayerRanks.cfg.get("ranks") != null) {
             for (String rankName : PlayerRanks.cfg.getConfigurationSection("ranks").getKeys(false)) {
-                Rank rank = new Rank(rankName, null, null, -1);
+                Rank rank = new Rank(rankName, null, null,null, -1);
 
                 String prefix = PlayerRanks.cfg.getString("ranks." + rankName + ".prefix");
+                String suffix = PlayerRanks.cfg.getString("ranks." + rankName + ".suffix");
                 String chatFormat = PlayerRanks.cfg.getString("ranks." + rankName + ".chat_format");
                 int priority = PlayerRanks.cfg.getInt("ranks." + rankName + ".priority");
 
+                if(PacketManager.isLegacyVersion()) {
+                    if (prefix.length() > 16) {
+                        prefix = prefix.substring(0, 16);
+                    }
+                    if (suffix.length() > 16) {
+                        suffix = suffix.substring(0, 16);
+                    }
+                }
+
                 rank.setPrefix(prefix);
+                rank.setSuffix(suffix);
                 rank.setChatFormat(chatFormat);
                 rank.setPriority(priority);
 
@@ -78,6 +89,7 @@ public class RankManager {
         for (Rank rank : ranks) {
             String name = rank.getName();
             String prefix = ChatColor.translateAlternateColorCodes('&', rank.getPrefix());
+            String suffix = ChatColor.translateAlternateColorCodes('&', rank.getSuffix());
             int priority = 1000 - rank.getPriority();
             String teamName = priority + name;
 
@@ -99,11 +111,11 @@ public class RankManager {
                 if (PacketManager.isLegacyVersion()) {
                     PacketManager.DISPLAY_NAME.set(packet, teamName);
                     PacketManager.PREFIX.set(packet, prefix);
-                    PacketManager.SUFFIX.set(packet, "");
+                    PacketManager.SUFFIX.set(packet, suffix);
                 } else {
                     PacketManager.DISPLAY_NAME.set(packet, ChatComponentText.newInstance(name));
                     PacketManager.PREFIX.set(packet, ChatComponentText.newInstance(prefix));
-                    PacketManager.SUFFIX.set(packet, ChatComponentText.newInstance(""));
+                    PacketManager.SUFFIX.set(packet, ChatComponentText.newInstance(suffix));
 
                     String s = PlayerRanks.cfg.getString("ranks." + rank.getName() + ".prefix");
                     if (s.contains("&")) {
