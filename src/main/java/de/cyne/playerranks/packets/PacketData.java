@@ -2,7 +2,6 @@ package de.cyne.playerranks.packets;
 
 public enum PacketData {
 
-    v1_7("e", "c", "d", "a", "f", "g", "b", "NA", "NA", "NA"),
     v1_8("g", "c", "d", "a", "h", "i", "b", "NA", "NA", "e"),
     v1_9("h", "c", "d", "a", "i", "j", "b", "NA", "f", "e"),
     v1_10("h", "c", "d", "a", "i", "j", "b", "NA", "f", "e"),

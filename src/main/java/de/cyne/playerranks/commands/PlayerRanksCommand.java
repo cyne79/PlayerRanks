@@ -1,11 +1,10 @@
 package de.cyne.playerranks.commands;
 
 import de.cyne.playerranks.PlayerRanks;
-import de.cyne.playerranks.rank.Inventories;
+import de.cyne.playerranks.misc.InventoryManager;
 import de.cyne.playerranks.rank.Rank;
 import de.cyne.playerranks.rank.RankManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
-
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -33,28 +31,14 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("ranks")) {
-                    sender.sendMessage("");
-                    sender.sendMessage("§8┃ §b● §8┃ §bRanks §8× §7Total§8: §f" + RankManager.ranks.size());
-                    sender.sendMessage("§8┃ §b● §8┃ ");
-
-                    if (RankManager.ranks.isEmpty()) {
-                        sender.sendMessage("§8┃ §b● §8┃ §cCurrently, there are no ranks set.");
-                    } else {
-                        for (Rank rank : RankManager.ranks) {
-                            sender.sendMessage("§8┃ §b● §8┃ §8- §f" + rank.getName() + " §8┃ §7Prefix §8► §8§r" + ChatColor.translateAlternateColorCodes('&', rank.getPrefix()) + " §8┃ §7Suffix §8► §8§r" + ChatColor.translateAlternateColorCodes('&', rank.getSuffix()));
-                        }
-                    }
-                    sender.sendMessage("");
+                    InventoryManager.getInventoryManager().openOverviewRanksInventory((Player)sender, 1);
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("info")) {
                     sender.sendMessage(PlayerRanks.prefix + "§cUsage§8: /§cplayerranks info §8<§cplayer§8>");
                     return true;
                 }
-                if (args[0].equalsIgnoreCase("ranks1")) {
-                    Inventories.openRankInventory((Player)sender, 1);
-                    return true;
-                }
+
                 this.sendPluginHelp(sender);
                 return true;
             }
@@ -70,8 +54,6 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
                     sender.sendMessage("§8┃ §b● §8┃ §bPlayerInfo §8× §7Player§8: §f" + target.getName());
                     sender.sendMessage("§8┃ §b● §8┃ ");
                     sender.sendMessage("§8┃ §b● §8┃ §7Rank§8: §r" + rank.getName());
-                    sender.sendMessage("§8┃ §b● §8┃ §7Prefix§8: §r" + ChatColor.translateAlternateColorCodes('&', rank.getPrefix()));
-                    sender.sendMessage("§8┃ §b● §8┃ §7Suffix§8: §r" + ChatColor.translateAlternateColorCodes('&', rank.getSuffix()));
                     sender.sendMessage("");
                     return true;
                 }
@@ -89,12 +71,12 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
                 + PlayerRanks.getInstance().getDescription().getVersion() + " §7by cyne");
         sender.sendMessage("§8┃ §b● §8┃ ");
         sender.sendMessage("§8┃ §b● §8┃ §8/§fplayerranks reload §8- §7Reload the plugin");
-        sender.sendMessage("§8┃ §b● §8┃ §8/§fplayerranks ranks §8- §7List all available ranks");
+        sender.sendMessage("§8┃ §b● §8┃ §8/§fplayerranks ranks §8- §7Open the Rank-Inventory");
         sender.sendMessage("§8┃ §b● §8┃ §8/§fplayerranks info <player> §8- §7Information about a player's ranks");
         sender.sendMessage("");
     }
 
-    private void reload(CommandSender sender) {
+    public static void reload(CommandSender sender) {
         long start = System.currentTimeMillis();
         sender.sendMessage("");
         sender.sendMessage(PlayerRanks.prefix + "§cReloading§8..");
@@ -136,7 +118,7 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
-            return getSuggestions(args[0], "reload", "ranks", "set", "info");
+            return getSuggestions(args[0], "reload", "ranks", "info");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("info")) {
                 List<String> suggestions = new ArrayList<>();

@@ -35,7 +35,7 @@ public class RankManager {
                 String chatFormat = PlayerRanks.cfg.getString("ranks." + rankName + ".chat_format");
                 int priority = PlayerRanks.cfg.getInt("ranks." + rankName + ".priority");
 
-                if(PacketManager.isLegacyVersion()) {
+                if(PacketManager.getPacketManager().isLegacyVersion()) {
                     if (prefix.length() > 16) {
                         prefix = prefix.substring(0, 16);
                     }
@@ -99,7 +99,7 @@ public class RankManager {
             }
 
             try {
-                if (!PacketManager.isLegacyVersion()) {
+                if (!PacketManager.getPacketManager().isLegacyVersion()) {
                     Class<?> typeChatComponentText = Class.forName("net.minecraft.server." + this.getVersion() + ".ChatComponentText");
                     ChatComponentText = typeChatComponentText.getConstructor(String.class);
                     typeEnumChatFormat = (Class<? extends Enum>) Class.forName("net.minecraft.server." + this.getVersion() + ".EnumChatFormat");
@@ -108,7 +108,7 @@ public class RankManager {
                 Constructor<?> constructor = getNMSClass("PacketPlayOutScoreboardTeam").getConstructor((Class<?>[]) new Class[0]);
                 Object packet = constructor.newInstance();
 
-                if (PacketManager.isLegacyVersion()) {
+                if (PacketManager.getPacketManager().isLegacyVersion()) {
                     PacketManager.DISPLAY_NAME.set(packet, teamName);
                     PacketManager.PREFIX.set(packet, prefix);
                     PacketManager.SUFFIX.set(packet, suffix);

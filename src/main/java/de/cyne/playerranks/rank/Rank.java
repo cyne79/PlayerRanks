@@ -1,5 +1,6 @@
 package de.cyne.playerranks.rank;
 
+import de.cyne.playerranks.PlayerRanks;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -87,4 +88,13 @@ public class Rank {
     public void removePlayer(Player player) {
         this.players.remove(player);
     }
+
+    public void saveToConfiguration() {
+        PlayerRanks.cfg.set("ranks." + this.getName() + ".prefix", this.getPrefix());
+        PlayerRanks.cfg.set("ranks." + this.getName() + ".suffix", this.getSuffix());
+        PlayerRanks.cfg.set("ranks." + this.getName() + ".chat_format", this.getChatFormat());
+        PlayerRanks.cfg.set("ranks." + this.getName() + ".priority", this.getPriority());
+        PlayerRanks.cfg.set("ranks." + this.getName() + ".default", this.isDefaultRank());
+    }
+
 }

@@ -17,8 +17,10 @@ public class PacketManager {
     public static Field PUSH;
     public static Field VISIBILITY;
 
-    public PacketManager() {
+    private static PacketManager instance;
 
+    public PacketManager() {
+        instance = this;
         try {
             PacketData currentVersion = null;
             for (PacketData packetData : PacketData.values()) {
@@ -35,32 +37,22 @@ public class PacketManager {
                 PARAM_INT = getField(currentVersion.getParamInt());
                 PACK_OPTION = getField(currentVersion.getPackOption());
                 DISPLAY_NAME = getField(currentVersion.getDisplayName());
+                VISIBILITY = getField(currentVersion.getVisibility());
 
-                if (!isLegacyVersion())
-                    TEAM_COLOR = getField(currentVersion.getColor());
-
-                if (isPushVersion())
-                    PUSH = getField(currentVersion.getPush());
-
-                if (isVisibilityVersion())
-                    VISIBILITY = getField(currentVersion.getVisibility());
+                if (!this.isLegacyVersion()) TEAM_COLOR = getField(currentVersion.getColor());
+                if (this.isPushVersion()) PUSH = getField(currentVersion.getPush());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
-    public static boolean isLegacyVersion() {
+    public boolean isLegacyVersion() {
         return Integer.parseInt(getVersion().split("_")[1]) <= 12;
     }
 
-    private static boolean isPushVersion() {
+    private boolean isPushVersion() {
         return Integer.parseInt(getVersion().split("_")[1]) >= 9;
-    }
-
-    private static boolean isVisibilityVersion() {
-        return Integer.parseInt(getVersion().split("_")[1]) >= 8;
     }
 
     private Class<?> getNMSClass(String name) {
@@ -73,7 +65,7 @@ public class PacketManager {
         }
     }
 
-    private static String getVersion() {
+    private String getVersion() {
         return Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
     }
 
@@ -83,4 +75,7 @@ public class PacketManager {
         return field;
     }
 
+    public static PacketManager getPacketManager() {
+        return instance;
+    }
 }
