@@ -57,6 +57,7 @@ public class InventoryClickListener implements Listener {
                     p.sendMessage("");
                     p.sendMessage("");
                     p.sendMessage(PlayerRanks.prefix + "§7Please enter a §cname §7for the §cnew rank§8.");
+                    p.sendMessage(PlayerRanks.prefix + "§7You can §ccancel §7with §8\"§f/pr cancel§8\".");
                 }
                 if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§8► §6Reload §7PlayerRanks")) {
                     long start = System.currentTimeMillis();
@@ -137,7 +138,7 @@ public class InventoryClickListener implements Listener {
                         p.sendMessage("");
                         p.sendMessage(PlayerRanks.prefix + "§cAre you sure you want to delete the rank §8\"§f" + rank.getName() + "§8\"§c?");
                         p.sendMessage(PlayerRanks.prefix + "§cConfirm §7by typing §8\"§fCONFIRM§8\"");
-                        p.sendMessage(PlayerRanks.prefix + "§cCancel §7by typing §8\"§fCANCEL§8\".");
+                        p.sendMessage(PlayerRanks.prefix + "§7You can §ccancel §7with §8\"§f/pr cancel§8\".");
                     }
                 }
 
@@ -145,7 +146,7 @@ public class InventoryClickListener implements Listener {
                     RankEditor.EditType type = null;
                     String change = "";
                     if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Prefix §8► §r")) {
-                        if(e.isShiftClick()) {
+                        if (e.isShiftClick()) {
                             this.copyToClipboard(rank.getPrefix());
                             p.sendMessage(PlayerRanks.prefix + "§7The prefix has been §acopied to the clipboard§8.");
                             return;
@@ -154,7 +155,7 @@ public class InventoryClickListener implements Listener {
                         change = "prefix";
                     }
                     if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Suffix §8► §r")) {
-                        if(e.isShiftClick()) {
+                        if (e.isShiftClick()) {
                             this.copyToClipboard(rank.getSuffix());
                             p.sendMessage(PlayerRanks.prefix + "§7The suffix has been §acopied to the clipboard§8.");
                             return;
@@ -163,7 +164,7 @@ public class InventoryClickListener implements Listener {
                         change = "suffix";
                     }
                     if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Chat Format §8► §r")) {
-                        if(e.isShiftClick()) {
+                        if (e.isShiftClick()) {
                             this.copyToClipboard(rank.getChatFormat());
                             p.sendMessage(PlayerRanks.prefix + "§7The chat format has been §acopied to the clipboard§8.");
                             return;
@@ -174,6 +175,7 @@ public class InventoryClickListener implements Listener {
                         p.sendMessage("");
                         p.sendMessage("");
                         p.sendMessage(PlayerRanks.prefix + "§7Please enter a §cnew chat format §7(Placeholders: %player%, %message%)§8.");
+                        p.sendMessage(PlayerRanks.prefix + "§7You can §ccancel §7with §8\"§f/pr cancel§8\".");
                     }
                     if (type != null) {
                         RankEditor rankEditor = new RankEditor(p, rank, type);
@@ -182,6 +184,7 @@ public class InventoryClickListener implements Listener {
                         p.sendMessage("");
                         p.sendMessage("");
                         p.sendMessage(PlayerRanks.prefix + "§7Please enter a §cnew " + change + "§8.");
+                        p.sendMessage(PlayerRanks.prefix + "§7You can §ccancel §7with §8\"§f/pr cancel§8\".");
                     }
                 }
 
@@ -193,7 +196,8 @@ public class InventoryClickListener implements Listener {
                         p.sendMessage("");
                         p.sendMessage("");
                         p.sendMessage(PlayerRanks.prefix + "§7Please enter a §cnew priority §7(number)§8.");
-                        p.sendMessage(PlayerRanks.prefix + "§7The higher the priority, the higher the rank is displayed in the tablist.");
+                        p.sendMessage(PlayerRanks.prefix + "§7The lower the priority, the higher the rank is displayed in the tablist.");
+                        p.sendMessage(PlayerRanks.prefix + "§7You can §ccancel §7with §8\"§f/pr cancel§8\".");
                     }
                 }
 
@@ -205,6 +209,17 @@ public class InventoryClickListener implements Listener {
                         p.sendMessage("");
                         p.sendMessage("");
                         p.sendMessage(PlayerRanks.prefix + "§7Please enter if this rank should be the §cdefault rank §7(true/false)§8.");
+                        p.sendMessage(PlayerRanks.prefix + "§7You can §ccancel §7with §8\"§f/pr cancel§8\".");
+                    }
+                }
+
+                if (e.getCurrentItem().getType().equals(Material.getMaterial("IRON_DOOR"))) {
+                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Permission §8► §r")) {
+                        if (e.isShiftClick()) {
+                            this.copyToClipboard("playerranks.rank." + rank.getName().toLowerCase());
+                            p.sendMessage(PlayerRanks.prefix + "§7The permission has been §acopied to the clipboard§8.");
+                            return;
+                        }
                     }
                 }
 

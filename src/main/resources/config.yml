@@ -8,17 +8,18 @@ update_notification: true
 
 use_chat_format: true
 
-#The higher the priority, the higher the rank is displayed in the tablist.
+#The lower the priority, the higher the rank is displayed in the tablist.
 ranks:
   default:
     prefix: '&aPlayer &8● &7'
     suffix: ''
     chat_format: '&8┃ &aPlayer &8● &7%player% &8» &r%message%'
-    priority: 1
+    priority: 2
     default: true
   admin:
     prefix: '&4Admin &8● &7'
     suffix: ''
     chat_format: '&8┃ &4Admin &8● &7%player% &8» &r%message%'
-    priority: 2
+    priority: 1
     default: false
+

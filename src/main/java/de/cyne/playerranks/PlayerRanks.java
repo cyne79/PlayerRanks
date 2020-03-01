@@ -64,9 +64,11 @@ public class PlayerRanks extends JavaPlugin {
 
         RankManager.getRankManager().loadRanks();
 
-        for (Player players : Bukkit.getOnlinePlayers()) {
+        for (Player players : Bukkit.getOnlinePlayers())
             RankManager.getRankManager().setRank(players);
-        }
+
+        RankManager.getRankManager().refreshAll();
+
     }
 
     private void registerCommands() {

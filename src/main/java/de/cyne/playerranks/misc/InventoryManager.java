@@ -9,19 +9,23 @@ import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class InventoryManager {
 
     public static HashMap<Player, Integer> currentPage = new HashMap<>();
 
-    private static InventoryManager instance;
+    private static InventoryManager inventoryManager;
 
     public InventoryManager() {
-        instance = this;
+        inventoryManager = this;
     }
 
     public void openOverviewRanksInventory(Player player, int site) {
+
+        RankManager.ranks.sort(Comparator.comparing(Rank::getPriority).reversed());
+
         int size = RankManager.ranks.size();
         int maxSite = (size == 0 ? 1 : (size / 18) + (size % 18 == 0 ? 0 : 1));
 
@@ -45,7 +49,6 @@ public class InventoryManager {
                 ItemBuilder rankItem = new ItemBuilder(Material.getMaterial("BOOK"));
                 rankItem.setDisplayName("§f" + rank.getName());
                 rankItem.setLore("§8§m--------------------", "§7Prefix §8► §8" + prefix + "§8", "§7Suffix §8► §8" + suffix + "§8", "§7Chat Format §8► §8" + chat_format + "§8", "§7Priority §8► §r" + priority, "§7Default Rank §8► §r" + (rank.isDefaultRank() ? "§a✔" : "§c✘"));
-
                 inventory.setItem(i, rankItem);
             }
         }
@@ -102,9 +105,6 @@ public class InventoryManager {
     public void openRankInventory(Player player, Rank rank) {
         Inventory inventory = Bukkit.createInventory(null, 4 * 9, "§bRankEditor §8× §7" + rank.getName());
 
-        ItemBuilder rankItem = new ItemBuilder(Material.getMaterial("BOOK"));
-        rankItem.setDisplayName("§f" + rank.getName());
-
         ItemBuilder placeholder;
         try {
             placeholder = new ItemBuilder(Material.valueOf("BLACK_STAINED_GLASS_PANE"));
@@ -125,50 +125,54 @@ public class InventoryManager {
             skull = Material.valueOf("SKULL_ITEM");
         }
 
+        ItemBuilder rankItem = new ItemBuilder(Material.getMaterial("BOOK"));
+        rankItem.setDisplayName("§f" + rank.getName());
+        inventory.setItem(10, rankItem);
+
         ItemBuilder goBack = new ItemBuilder(skull, 1, (short) SkullType.PLAYER.ordinal());
         goBack.setDisplayName("§8► §7Go Back");
         goBack.setSkullOwner("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ2OWUwNmU1ZGFkZmQ4NGU1ZjNkMWMyMTA2M2YyNTUzYjJmYTk0NWVlMWQ0ZDcxNTJmZGM1NDI1YmMxMmE5In19fQ==");
+        inventory.setItem(27, goBack);
 
         ItemBuilder prefix = new ItemBuilder(Material.getMaterial("PAPER"));
         prefix.setDisplayName("§7Prefix §8► §r" + rank.getPrefix());
         prefix.setLore("§8§m--------------------", " §8➟ §cClick to change the §fprefix", " §8➟ §cShift-Click to copy the §fprefix");
+        inventory.setItem(12, prefix);
 
         ItemBuilder suffix = new ItemBuilder(Material.getMaterial("PAPER"));
         suffix.setDisplayName("§7Suffix §8► §r" + rank.getSuffix());
         suffix.setLore("§8§m--------------------", " §8➟ §cClick to change the §fsuffix", " §8➟ §cShift-Click to copy the §fsuffix");
+        inventory.setItem(13, suffix);
 
         ItemBuilder chat_format = new ItemBuilder(Material.getMaterial("PAPER"));
         chat_format.setDisplayName("§7Chat Format §8► §r" + rank.getChatFormat());
         chat_format.setLore("§8§m--------------------", " §8➟ §cClick to change the §fchat format", " §8➟ §cShift-Click to copy the §fchat format");
+        inventory.setItem(14, chat_format);
 
         ItemBuilder priority = new ItemBuilder(Material.getMaterial("STONE_BUTTON"));
         priority.setDisplayName("§7Priority §8► §r" + rank.getPriority());
         priority.setLore("§8§m--------------------", " §8➟ §cClick to change the §fpriority");
+        inventory.setItem(15, priority);
 
         ItemBuilder defaultRank = new ItemBuilder(Material.getMaterial("LEVER"));
         defaultRank.setDisplayName("§7Default Rank §8► §r" + (rank.isDefaultRank() ? "true" : "false"));
         defaultRank.setLore("§8§m--------------------", " §8➟ §cClick to change §f\"default rank\"");
+        inventory.setItem(16, defaultRank);
 
         ItemBuilder deleteRank = new ItemBuilder(Material.getMaterial("BARRIER"));
         deleteRank.setDisplayName("§8► §cDelete Rank");
-
-
-        inventory.setItem(10, rankItem);
-
-        inventory.setItem(12, prefix);
-        inventory.setItem(13, suffix);
-        inventory.setItem(14, chat_format);
-        inventory.setItem(15, priority);
-        inventory.setItem(16, defaultRank);
-        inventory.setItem(27, goBack);
         inventory.setItem(31, deleteRank);
 
+        ItemBuilder permission = new ItemBuilder(Material.getMaterial("IRON_DOOR"));
+        permission.setDisplayName("§7Permission §8► §rplayerranks.rank." + rank.getName().toLowerCase());
+        permission.setLore("§8§m--------------------", " §8➟ §cShift-Click to copy the §fpermission");
+        inventory.setItem(34, permission);
 
         player.openInventory(inventory);
     }
 
     public static InventoryManager getInventoryManager() {
-        return instance;
+        return inventoryManager;
     }
 
 }

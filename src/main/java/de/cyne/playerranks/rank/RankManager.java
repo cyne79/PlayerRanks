@@ -28,14 +28,14 @@ public class RankManager {
     public void loadRanks() {
         if (PlayerRanks.cfg.get("ranks") != null) {
             for (String rankName : PlayerRanks.cfg.getConfigurationSection("ranks").getKeys(false)) {
-                Rank rank = new Rank(rankName, null, null,null, -1);
+                Rank rank = new Rank(rankName, null, null, null, -1);
 
                 String prefix = PlayerRanks.cfg.getString("ranks." + rankName + ".prefix");
                 String suffix = PlayerRanks.cfg.getString("ranks." + rankName + ".suffix");
                 String chatFormat = PlayerRanks.cfg.getString("ranks." + rankName + ".chat_format");
                 int priority = PlayerRanks.cfg.getInt("ranks." + rankName + ".priority");
 
-                if(PacketManager.getPacketManager().isLegacyVersion()) {
+                if (PacketManager.getPacketManager().isLegacyVersion()) {
                     if (prefix.length() > 16) {
                         prefix = prefix.substring(0, 16);
                     }
@@ -64,7 +64,7 @@ public class RankManager {
         for (Rank rank : ranks) {
             if (player.hasPermission("playerranks.rank." + rank.getName())) {
                 if (players.containsKey(player)) {
-                    if (players.get(player).getPriority() < rank.getPriority()) {
+                    if (players.get(player).getPriority() > rank.getPriority()) {
                         players.get(player).removePlayer(player);
                         players.remove(player);
                         rank.addPlayer(player);
@@ -90,7 +90,7 @@ public class RankManager {
             String name = rank.getName();
             String prefix = ChatColor.translateAlternateColorCodes('&', rank.getPrefix());
             String suffix = ChatColor.translateAlternateColorCodes('&', rank.getSuffix());
-            int priority = 1000 - rank.getPriority();
+            int priority = 1000 + rank.getPriority();
             String teamName = priority + name;
 
             Collection<String> entries = new ArrayList<>();

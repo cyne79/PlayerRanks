@@ -32,6 +32,7 @@ public class AsyncPlayerChatListener implements Listener {
             }
         }
 
+        // > RankEditor
         if (PlayerRanks.rankEditors.containsKey(p)) {
             e.setCancelled(true);
             if (PlayerRanks.rankEditors.get(p).getEditType() == RankEditor.EditType.NEW_RANK) {
@@ -118,15 +119,9 @@ public class AsyncPlayerChatListener implements Listener {
             }
 
             if (PlayerRanks.rankEditors.get(p).getEditType() == RankEditor.EditType.DELETE_RANK) {
-                if (!e.getMessage().equalsIgnoreCase("CONFIRM") && !e.getMessage().equalsIgnoreCase("CANCEL")) {
+                if (!e.getMessage().equalsIgnoreCase("CONFIRM")) {
                     p.sendMessage(PlayerRanks.prefix + "§7Please type §8\"§fCONFIRM§8\" §7to §cdelete the rank§8.");
-                    p.sendMessage(PlayerRanks.prefix + "§cCancel §7by typing §8\"§fCANCEL§8\".");
-                    return;
-                }
-                if (e.getMessage().equalsIgnoreCase("CANCEL")) {
-                    p.sendMessage(PlayerRanks.prefix + "§7The rank has §anot been deleted§8.");
-                    InventoryManager.getInventoryManager().openRankInventory(p, PlayerRanks.rankEditors.get(p).getRank());
-                    PlayerRanks.rankEditors.remove(p);
+                    p.sendMessage(PlayerRanks.prefix + "§7You can §ccancel §7with §8\"§f/pr cancel§8\".");
                     return;
                 }
                 Rank rank = PlayerRanks.rankEditors.get(p).getRank();

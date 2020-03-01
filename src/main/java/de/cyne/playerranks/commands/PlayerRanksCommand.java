@@ -31,11 +31,29 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("ranks")) {
-                    InventoryManager.getInventoryManager().openOverviewRanksInventory((Player)sender, 1);
+                    InventoryManager.getInventoryManager().openOverviewRanksInventory((Player) sender, 1);
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("info")) {
                     sender.sendMessage(PlayerRanks.prefix + "§cUsage§8: /§cplayerranks info §8<§cplayer§8>");
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("cancel") && sender instanceof Player) {
+                    Player p = (Player) sender;
+
+                    if (!PlayerRanks.rankEditors.containsKey(p)) {
+                        p.sendMessage(PlayerRanks.prefix + "§7You are §cnot editing §7something currently§8.");
+                        return true;
+                    }
+                    Rank rank = PlayerRanks.rankEditors.get(p).getRank();
+                    PlayerRanks.rankEditors.remove(p);
+                    p.sendMessage(PlayerRanks.prefix + "§7The process has been §ccancelled§8.");
+
+                    if (rank == null) {
+                        InventoryManager.getInventoryManager().openOverviewRanksInventory(p, InventoryManager.currentPage.containsKey(p) ? InventoryManager.currentPage.get(p) : 1);
+                        return true;
+                    }
+                    InventoryManager.getInventoryManager().openRankInventory(p, rank);
                     return true;
                 }
 

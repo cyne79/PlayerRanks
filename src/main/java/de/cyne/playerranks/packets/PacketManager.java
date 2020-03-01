@@ -17,10 +17,10 @@ public class PacketManager {
     public static Field PUSH;
     public static Field VISIBILITY;
 
-    private static PacketManager instance;
+    private static PacketManager packetManager;
 
     public PacketManager() {
-        instance = this;
+        packetManager = this;
         try {
             PacketData currentVersion = null;
             for (PacketData packetData : PacketData.values()) {
@@ -76,6 +76,6 @@ public class PacketManager {
     }
 
     public static PacketManager getPacketManager() {
-        return instance;
+        return packetManager;
     }
 }
