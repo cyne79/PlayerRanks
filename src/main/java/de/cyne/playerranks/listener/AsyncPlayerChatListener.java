@@ -36,13 +36,16 @@ public class AsyncPlayerChatListener implements Listener {
         if (PlayerRanks.rankEditors.containsKey(p)) {
             e.setCancelled(true);
             if (PlayerRanks.rankEditors.get(p).getEditType() == RankEditor.EditType.NEW_RANK) {
+                int highestPriority = 0;
                 for (Rank existingRank : RankManager.ranks) {
                     if (e.getMessage().equalsIgnoreCase(existingRank.getName())) {
                         p.sendMessage(PlayerRanks.prefix + "§cA rank with this name already exists.");
                         return;
                     }
+                    if(existingRank.getPriority() > highestPriority) highestPriority = existingRank.getPriority();
                 }
-                Rank rank = new Rank(e.getMessage(), "", "", "&7%player% &8» §r%message%", -1);
+
+                Rank rank = new Rank(e.getMessage(), "", "", "&7%player% &8» §r%message%", highestPriority + 1);
                 RankManager.ranks.add(rank);
                 rank.saveToConfiguration();
 

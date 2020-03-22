@@ -11,6 +11,8 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InventoryManager {
 
@@ -24,9 +26,9 @@ public class InventoryManager {
 
     public void openOverviewRanksInventory(Player player, int site) {
 
-        RankManager.ranks.sort(Comparator.comparing(Rank::getPriority).reversed());
+        List<Rank> sortedRanks = RankManager.ranks.stream().sorted(Comparator.comparing(Rank::getPriority)).collect(Collectors.toList());
 
-        int size = RankManager.ranks.size();
+        int size = sortedRanks.size();
         int maxSite = (size == 0 ? 1 : (size / 18) + (size % 18 == 0 ? 0 : 1));
 
         if (site > maxSite && site > 1) return;
@@ -38,8 +40,8 @@ public class InventoryManager {
         for (int i = 0; i < 18; i++) {
             int pos = (18 * (site - 1)) + i;
 
-            if (RankManager.ranks.size() - 1 >= pos) {
-                Rank rank = RankManager.ranks.get(pos);
+            if (sortedRanks.size() - 1 >= pos) {
+                Rank rank = sortedRanks.get(pos);
 
                 String prefix = ChatColor.translateAlternateColorCodes('&', rank.getPrefix());
                 String suffix = ChatColor.translateAlternateColorCodes('&', rank.getSuffix());
@@ -74,7 +76,7 @@ public class InventoryManager {
 
         ItemBuilder currentPage = new ItemBuilder(skull, 1, (short) SkullType.PLAYER.ordinal());
         currentPage.setDisplayName("§8► §7Current Page: §f" + site + "§8/§f" + maxSite);
-        currentPage.setLore("§8§m--------------------", " §7Total Ranks§8: §f" + RankManager.ranks.size());
+        currentPage.setLore("§8§m--------------------", " §8● §7Total Ranks§8: §f" + RankManager.ranks.size());
         currentPage.setSkullOwner("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y5NWQ3YzFiYmYzYWZhMjg1ZDhkOTY3NTdiYjU1NzIyNTlhM2FlODU0ZjUzODlkYzUzMjA3Njk5ZDk0ZmQ4In19fQ==");
         inventory.setItem(31, currentPage);
 

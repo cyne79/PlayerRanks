@@ -25,7 +25,7 @@ public class PlayerJoinListener implements Listener {
             TextComponent click = new TextComponent("§8*§aclick§8*");
 
             click.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§8» §7Redirect to §bhttps://spigotmc.org/").create()));
-            click.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://spigotmc.org/resources/65769/"));
+            click.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://spigotmc.org/resources/66559/"));
 
             message.addExtra(click);
 
