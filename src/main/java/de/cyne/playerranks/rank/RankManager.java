@@ -109,7 +109,7 @@ public class RankManager {
                 Object packet = constructor.newInstance();
 
                 if (PacketManager.getPacketManager().isLegacyVersion()) {
-                    PacketManager.DISPLAY_NAME.set(packet, teamName);
+                    PacketManager.DISPLAY_NAME.set(packet, name);
                     PacketManager.PREFIX.set(packet, prefix);
                     PacketManager.SUFFIX.set(packet, suffix);
                 } else {
@@ -129,7 +129,7 @@ public class RankManager {
                 }
                 PacketManager.ENTRIES.set(packet, entries);
 
-                PacketManager.TEAM_NAME.set(packet, name);
+                PacketManager.TEAM_NAME.set(packet, teamName);
 
                 PacketManager.PACK_OPTION.set(packet, 1);
 

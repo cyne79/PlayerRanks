@@ -1,10 +1,7 @@
 package de.cyne.playerranks;
 
 import de.cyne.playerranks.commands.PlayerRanksCommand;
-import de.cyne.playerranks.listener.AsyncPlayerChatListener;
-import de.cyne.playerranks.listener.InventoryClickListener;
-import de.cyne.playerranks.listener.PlayerJoinListener;
-import de.cyne.playerranks.listener.PlayerQuitListener;
+import de.cyne.playerranks.listener.*;
 import de.cyne.playerranks.misc.InventoryManager;
 import de.cyne.playerranks.rank.RankEditor;
 import de.cyne.playerranks.misc.Updater;
@@ -17,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +66,6 @@ public class PlayerRanks extends JavaPlugin {
             RankManager.getRankManager().setRank(players);
 
         RankManager.getRankManager().refreshAll();
-
     }
 
     private void registerCommands() {
@@ -78,6 +75,7 @@ public class PlayerRanks extends JavaPlugin {
     private void registerListener() {
         Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), PlayerRanks.getInstance());
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), PlayerRanks.getInstance());
+        Bukkit.getPluginManager().registerEvents(new PlayerChatListener(), PlayerRanks.getInstance());
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), PlayerRanks.getInstance());
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), PlayerRanks.getInstance());
     }

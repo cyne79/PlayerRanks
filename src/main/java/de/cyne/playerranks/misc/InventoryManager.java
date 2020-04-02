@@ -50,7 +50,7 @@ public class InventoryManager {
 
                 ItemBuilder rankItem = new ItemBuilder(Material.getMaterial("BOOK"));
                 rankItem.setDisplayName("§f" + rank.getName());
-                rankItem.setLore("§8§m--------------------", "§7Prefix §8► §8" + prefix + "§8", "§7Suffix §8► §8" + suffix + "§8", "§7Chat Format §8► §8" + chat_format + "§8", "§7Priority §8► §r" + priority, "§7Default Rank §8► §r" + (rank.isDefaultRank() ? "§a✔" : "§c✘"));
+                rankItem.setLore("§8§m--------------------", "§7Prefix §8► §r" + prefix, "§7Suffix §8► §r" + suffix, "§7Chat Format §8► §r" + chat_format, "§7Priority §8► §r" + priority, "§7Default Rank §8► §r" + (rank.isDefaultRank() ? "§a✔" : "§c✘"));
                 inventory.setItem(i, rankItem);
             }
         }
