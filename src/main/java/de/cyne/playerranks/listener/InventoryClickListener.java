@@ -141,7 +141,7 @@ public class InventoryClickListener implements Listener {
                 if (e.getCurrentItem().getType().equals(Material.getMaterial("PAPER"))) {
                     RankEditor.EditType type = null;
                     String change = "";
-                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Prefix §8► §r")) {
+                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Prefix §8► §f")) {
                         if (e.isShiftClick()) {
                             this.copyToClipboard(rank.getPrefix());
                             p.sendMessage(PlayerRanks.prefix + "§7The prefix has been §acopied to the clipboard§8.");
@@ -150,7 +150,7 @@ public class InventoryClickListener implements Listener {
                         type = RankEditor.EditType.PREFIX;
                         change = "prefix";
                     }
-                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Suffix §8► §r")) {
+                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Suffix §8► §f")) {
                         if (e.isShiftClick()) {
                             this.copyToClipboard(rank.getSuffix());
                             p.sendMessage(PlayerRanks.prefix + "§7The suffix has been §acopied to the clipboard§8.");
@@ -159,7 +159,7 @@ public class InventoryClickListener implements Listener {
                         type = RankEditor.EditType.SUFFIX;
                         change = "suffix";
                     }
-                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Chat Format §8► §r")) {
+                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Chat Format §8► §f")) {
                         if (e.isShiftClick()) {
                             this.copyToClipboard(rank.getChatFormat());
                             p.sendMessage(PlayerRanks.prefix + "§7The chat format has been §acopied to the clipboard§8.");
@@ -185,7 +185,7 @@ public class InventoryClickListener implements Listener {
                 }
 
                 if (e.getCurrentItem().getType().equals(Material.getMaterial("STONE_BUTTON"))) {
-                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Priority §8► §r")) {
+                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Priority §8► §f")) {
                         RankEditor rankEditor = new RankEditor(p, rank, RankEditor.EditType.PRIORITY);
                         PlayerRanks.rankEditors.put(p, rankEditor);
                         p.closeInventory();
@@ -198,7 +198,7 @@ public class InventoryClickListener implements Listener {
                 }
 
                 if (e.getCurrentItem().getType().equals(Material.getMaterial("LEVER"))) {
-                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Default Rank §8► §r")) {
+                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Default Rank §8► §f")) {
                         RankEditor rankEditor = new RankEditor(p, rank, RankEditor.EditType.DEFAULT_RANK);
                         PlayerRanks.rankEditors.put(p, rankEditor);
                         p.closeInventory();
@@ -210,7 +210,7 @@ public class InventoryClickListener implements Listener {
                 }
 
                 if (e.getCurrentItem().getType().equals(Material.getMaterial("IRON_DOOR"))) {
-                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Permission §8► §r")) {
+                    if (e.getCurrentItem().getItemMeta().getDisplayName().contains("§7Permission §8► §f")) {
                         if (e.isShiftClick()) {
                             this.copyToClipboard("playerranks.rank." + rank.getName().toLowerCase());
                             p.sendMessage(PlayerRanks.prefix + "§7The permission has been §acopied to the clipboard§8.");

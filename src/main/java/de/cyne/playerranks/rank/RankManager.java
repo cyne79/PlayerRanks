@@ -16,7 +16,7 @@ public class RankManager {
     public static HashMap<Player, Rank> players = new HashMap<>();
     public static ArrayList<Rank> ranks = new ArrayList<>();
 
-    private static Constructor<?> ChatComponentText;
+    private static Constructor<?> chatComponentText;
     private static Class<? extends Enum> typeEnumChatFormat;
 
     private static RankManager rankManager;
@@ -88,20 +88,24 @@ public class RankManager {
     public void sendScoreboardPackets(int state) {
         for (Rank rank : ranks) {
             String name = rank.getName();
-            String prefix = ChatColor.translateAlternateColorCodes('&', rank.getPrefix());
-            String suffix = ChatColor.translateAlternateColorCodes('&', rank.getSuffix());
+            String prefix = "";
+            String suffix = "";
             int priority = 1000 + rank.getPriority();
             String teamName = priority + name;
 
             Collection<String> entries = new ArrayList<>();
             for (Player players : rank.getPlayers()) {
+
+                prefix = PlayerRanks.getFormattedMessage(players, rank.getPrefix());
+                suffix = PlayerRanks.getFormattedMessage(players, rank.getSuffix());
+
                 entries.add(players.getName());
             }
 
             try {
                 if (!PacketManager.getPacketManager().isLegacyVersion()) {
                     Class<?> typeChatComponentText = Class.forName("net.minecraft.server." + this.getVersion() + ".ChatComponentText");
-                    ChatComponentText = typeChatComponentText.getConstructor(String.class);
+                    chatComponentText = typeChatComponentText.getConstructor(String.class);
                     typeEnumChatFormat = (Class<? extends Enum>) Class.forName("net.minecraft.server." + this.getVersion() + ".EnumChatFormat");
                 }
 
@@ -113,9 +117,9 @@ public class RankManager {
                     PacketManager.PREFIX.set(packet, prefix);
                     PacketManager.SUFFIX.set(packet, suffix);
                 } else {
-                    PacketManager.DISPLAY_NAME.set(packet, ChatComponentText.newInstance(name));
-                    PacketManager.PREFIX.set(packet, ChatComponentText.newInstance(prefix));
-                    PacketManager.SUFFIX.set(packet, ChatComponentText.newInstance(suffix));
+                    PacketManager.DISPLAY_NAME.set(packet, chatComponentText.newInstance(name));
+                    PacketManager.PREFIX.set(packet, chatComponentText.newInstance(prefix));
+                    PacketManager.SUFFIX.set(packet, chatComponentText.newInstance(suffix));
 
                     String s = PlayerRanks.cfg.getString("ranks." + rank.getName() + ".prefix");
                     if (s.contains("&")) {
@@ -128,9 +132,7 @@ public class RankManager {
                     }
                 }
                 PacketManager.ENTRIES.set(packet, entries);
-
                 PacketManager.TEAM_NAME.set(packet, teamName);
-
                 PacketManager.PACK_OPTION.set(packet, 1);
 
                 if (PacketManager.VISIBILITY != null) {

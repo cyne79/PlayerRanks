@@ -31,7 +31,7 @@ public class PlayerChatListener implements Listener {
                     if (existingRank.getPriority() > highestPriority) highestPriority = existingRank.getPriority();
                 }
 
-                Rank rank = new Rank(e.getMessage(), "", "", "&7%player% &8» §r%message%", highestPriority + 1);
+                Rank rank = new Rank(e.getMessage(), "", "", "&7%player% &8» §f%message%", highestPriority + 1);
                 RankManager.ranks.add(rank);
                 rank.saveToConfiguration();
 

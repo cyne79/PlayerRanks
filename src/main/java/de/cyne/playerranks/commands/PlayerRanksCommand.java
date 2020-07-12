@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
+import org.bukkit.event.Listener;
+
+public class PlayerRanksCommand implements CommandExecutor, TabExecutor, Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -71,7 +73,7 @@ public class PlayerRanksCommand implements CommandExecutor, TabExecutor {
                     sender.sendMessage("");
                     sender.sendMessage("§8┃ §b● §8┃ §bPlayerInfo §8× §7Player§8: §f" + target.getName());
                     sender.sendMessage("§8┃ §b● §8┃ ");
-                    sender.sendMessage("§8┃ §b● §8┃ §7Rank§8: §r" + rank.getName());
+                    sender.sendMessage("§8┃ §b● §8┃ §7Rank§8: §f" + rank.getName());
                     sender.sendMessage("");
                     return true;
                 }

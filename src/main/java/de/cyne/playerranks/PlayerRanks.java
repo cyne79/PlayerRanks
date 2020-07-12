@@ -1,20 +1,23 @@
 package de.cyne.playerranks;
 
 import de.cyne.playerranks.commands.PlayerRanksCommand;
+import de.cyne.playerranks.expansions.PlayerRanksExpansions;
 import de.cyne.playerranks.listener.*;
+import de.cyne.playerranks.metrics.Metrics;
 import de.cyne.playerranks.misc.InventoryManager;
 import de.cyne.playerranks.rank.RankEditor;
 import de.cyne.playerranks.misc.Updater;
 import de.cyne.playerranks.packets.PacketManager;
 import de.cyne.playerranks.rank.Rank;
 import de.cyne.playerranks.rank.RankManager;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,10 +41,19 @@ public class PlayerRanks extends JavaPlugin {
 
     public static HashMap<Player, RankEditor> rankEditors = new HashMap<>();
 
-    public static String prefix = "§8┃ §bPlayerRanks §8┃ §r";
+    public static boolean placeholderApi = false;
+
+    public static String prefix = "§8┃ §bPlayerRanks §8┃ §f";
+
+    public Metrics metrics;
 
     public void onEnable() {
         instance = this;
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            placeholderApi = true;
+            new PlayerRanksExpansions(getInstance()).register();
+        }
 
         saveDefaultConfig();
         try {
@@ -66,6 +78,9 @@ public class PlayerRanks extends JavaPlugin {
             RankManager.getRankManager().setRank(players);
 
         RankManager.getRankManager().refreshAll();
+
+        metrics = new Metrics(PlayerRanks.getInstance(), 7113);
+        //metrics.addCustomChart(new Metrics.SimplePie("singleworld_mode", () -> singleWorld_mode ? "enabled" : "disabled"));
     }
 
     private void registerCommands() {
@@ -73,6 +88,7 @@ public class PlayerRanks extends JavaPlugin {
     }
 
     private void registerListener() {
+        Bukkit.getPluginManager().registerEvents(new PlayerRanksCommand(), PlayerRanks.getInstance());
         Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), PlayerRanks.getInstance());
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), PlayerRanks.getInstance());
         Bukkit.getPluginManager().registerEvents(new PlayerChatListener(), PlayerRanks.getInstance());
@@ -82,6 +98,24 @@ public class PlayerRanks extends JavaPlugin {
 
     public static PlayerRanks getInstance() {
         return instance;
+    }
+
+    public static boolean isInteger(String string) {
+        try {
+            Integer.parseInt(string);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        return true;
+    }
+
+    public static String getFormattedMessage(Player player, String message) {
+        message = ChatColor.translateAlternateColorCodes('&', message);
+        if(PlayerRanks.placeholderApi) {
+            return PlaceholderAPI.setPlaceholders(player, message);
+        } else {
+            return message;
+        }
     }
 
 }

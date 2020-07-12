@@ -23,7 +23,7 @@ public class AsyncPlayerChatListener implements Listener {
 
             Rank rank = RankManager.players.get(p);
             if (rank != null && PlayerRanks.cfg.get("ranks." + rank.getName() + ".chat_format") != null) {
-                e.setFormat(ChatColor.translateAlternateColorCodes('&', rank.getChatFormat()).replace("%player%", p.getName()).replace("%message%", message));
+                e.setFormat(PlayerRanks.getFormattedMessage(p, rank.getChatFormat()).replace("%player%", p.getName()).replace("%message%", message));
             }
         }
     }

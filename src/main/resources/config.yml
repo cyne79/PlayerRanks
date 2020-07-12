@@ -1,7 +1,7 @@
 #
 #    ___  _    ____ _   _ ____ ____ ____ ____ _  _ _  _ ____
 #    |__] |    |__|  \_/  |___ |__/ |__/ |__| |\ | |_/  [__
-#    |    |___ |  |   |   |___ |  \ |  \ |  | | \| | \_ ___]    v2.1 by cyne
+#    |    |___ |  |   |   |___ |  \ |  \ |  | | \| | \_ ___]    v2.2 by cyne
 #
 
 update_notification: true
@@ -13,13 +13,13 @@ ranks:
   default:
     prefix: '&aPlayer &8● &7'
     suffix: ''
-    chat_format: '&8┃ &aPlayer &8● &7%player% &8» &r%message%'
+    chat_format: '&8┃ &aPlayer &8● &7%player% &8» &f%message%'
     priority: 2
     default: true
   admin:
     prefix: '&4Admin &8● &7'
     suffix: ''
-    chat_format: '&8┃ &4Admin &8● &7%player% &8» &r%message%'
+    chat_format: '&8┃ &4Admin &8● &7%player% &8» &f%message%'
     priority: 1
     default: false
 

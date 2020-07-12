@@ -1,7 +1,8 @@
 name: PlayerRanks
-version: 2.1
+version: 2.2
 author: cyne
 main: de.cyne.playerranks.PlayerRanks
+softdepend: [PlaceholderAPI]
 
 commands:
   playerranks:
